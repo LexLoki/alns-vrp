@@ -39,7 +39,7 @@ void readVRP(ifstream &str){
     int max = 100;
     string line;
     string name, comment, type;
-    int dim, cap, i;
+    int dim, cap, dep, i;
     str.ignore(max,':'); str >> name;
     str.ignore(max,':'); str >> comment;
     str.ignore(max,':'); str >> type;
@@ -64,10 +64,18 @@ void readVRP(ifstream &str){
     for(i=0;i<dim;i++){
         str >> line >> dem[i];
     }
+    //Read depot
+    str >> line;
+    str >> dep;
+    dep -= 1;
 
-    CVRP instance(name, dist, dem, dim, cap);
+    CVRP instance(name, dist, dem, dim, cap, dep);
     
     instance.print();
+}
+
+void petal(CVRP inst){
+    
 }
 
 int main() {

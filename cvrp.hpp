@@ -5,9 +5,12 @@
 
 class CVRP : public VRP{
     int C; //vehicle capacity
+    int dep; //depot index
 public:
-    CVRP(std::string name, float **dist, float *dems, int dimension, int capacity);
+    CVRP(std::string name, float **dist, float *dems, int dimension, int capacity, int depot);
     void print();
+
+    static void getPetal(float **pos);
 };
 
 #endif
