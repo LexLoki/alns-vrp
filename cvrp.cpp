@@ -1,7 +1,7 @@
 #include "cvrp.hpp"
 #include <iostream>
-#include <bits/stdc++.h> 
-#include <math>
+#include <list> 
+#include <cmath>
 
 using namespace std;
 
@@ -14,7 +14,7 @@ void CVRP::print(){
     cout << "Depot: " << dep << endl;
 }
 
-static void CVRP::getPetal(float **pos, int n, int dep, int cap, int *dems){
+void CVRP::getPetal(float **pos, int n, int dep, int cap, float *dems){
     int i,j;
     float *angles = new float[n]; //{w/e, angles ...}
     int *index = new int[n-1];    //{1,2,3,4,...,n-1} (0 out)
@@ -26,6 +26,44 @@ static void CVRP::getPetal(float **pos, int n, int dep, int cap, int *dems){
             index[j++] = i;
         }
     }
-    sort(index,index+n-1,[&](int i,int j){return angles[A[i]]<angles[A[j]];});
+    angles[dep] = 0;
+    //indexes in ascending angle order relative to depot
+    sort(index,index+n-1,[&angles](int i,int j){return angles[i]<angles[j];});
+
     //now create route with indexes
+    list<list<int> *> *routes = new list<list<int> *>();
+    list<int> *route = new list<int>(); route->push_back(dep);
+    int idx;
+    float rem = cap;
+    for(i=0;i<n-1;i++){
+        idx = index[i];
+        if(dems[idx]>rem){
+            route->push_back(dep); rem = cap;
+            routes->push_back(route);
+            route = new list<int>();
+            route->push_back(dep);
+        }
+        route->push_back(idx);
+        rem -= dems[idx];
+    }
+    if(route->size()>1){
+        route->push_back(dep);
+        routes->push_back(route);
+    }
+    else{
+        delete route;
+    }
+    //lets clear
+    i=1;
+    for(auto it = routes->begin(); it != routes->end(); ++it){
+        route = *it;
+        cout << "Route " << i++ << ":" << endl;
+        for(auto it2 = route->begin(); it2 != route->end(); ++it2){
+            cout << " (" << *it2 << ", " << angles[*it2] << ")";
+        }
+        cout << endl;
+        delete route;
+    }
+    delete routes;
+    //return routes
 }

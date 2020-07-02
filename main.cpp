@@ -3,7 +3,7 @@
 #include <string>
 #include <stdio.h>
 #include <unistd.h>
-#include <math.h>
+#include <cmath>
 #include "vrp.hpp"
 #include "cvrp.hpp"
 
@@ -46,6 +46,7 @@ void readVRP(ifstream &str){
     str.ignore(max,':'); str >> dim;
     str.ignore(max,':'); str.ignore(max,':'); str >> cap;
 
+
     //Read coordinates
     str >> line;
     float **pos = new float*[dim];
@@ -55,8 +56,6 @@ void readVRP(ifstream &str){
         //cout << pos[i][0] << ", " << pos[i][1] << endl;
     }
     float **dist = coordToDist(pos, dim);
-    for(i=0;i<dim;delete[] pos[i++]);
-    delete[] pos;
 
     //Read demands
     str >> line;
@@ -71,7 +70,12 @@ void readVRP(ifstream &str){
 
     CVRP instance(name, dist, dem, dim, cap, dep);
     
-    instance.print();
+    //instance.print();
+    CVRP::getPetal(pos, dim, dep, cap, dem);
+
+    //Freeing positions
+    for(i=0;i<dim;delete[] pos[i++]);
+    delete[] pos;
 }
 
 void petal(CVRP inst){

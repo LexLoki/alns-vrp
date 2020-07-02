@@ -75,11 +75,12 @@
 		},
 		{
 			"type": "shell",
-			"label": "shell: g++ build active file",
+			"label": "shell: g++ build project",
 			"command": "/usr/bin/g++",
 			"args": [
 				"-g",
-				"${file}",
+				"-std=c++11",
+				"${workspaceFolder}/**.cpp",
 				"-o",
 				"${fileDirname}/${fileBasenameNoExtension}"
 			],

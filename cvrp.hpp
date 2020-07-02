@@ -10,7 +10,7 @@ public:
     CVRP(std::string name, float **dist, float *dems, int dimension, int capacity, int depot);
     void print();
 
-    static void getPetal(float **pos);
+    static void getPetal(float **pos, int n, int dep, int cap, float *dems);
 };
 
 #endif
