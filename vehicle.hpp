@@ -4,18 +4,36 @@
 #include <list> 
 #include <iostream>
 
+/** Represents a route with load/cost information,
+ * 
+ */
 class Vehicle{
-    int cap; //capacity
+    float cap; //capacity
 public:
-    list<int> *route;
+    std::list<int> *route;
     int count;
     int load;
     float cost;
 
     Vehicle(int cap);
-    void setRoute(list<int> *r);
+    Vehicle(const Vehicle &veh);
+
+    void setRoute(std::list<int> *r, float **dist, float *loads);
     bool empty();
-    void removeNode(int index);
+
+    int removeNode(int index, float **dist, float *load);
+    int removeNode(std::list<int>::iterator it, float **dist, float *load);
+
+    int getNode(int index);
+    float addNode(std::list<int>::iterator it, int nd, float **dist, float *load);
+
+    bool canFit(float load);
+
+
+    /*would improve
+    list<int>::iterator begin(); //begin+1
+    list<int>::iterator end(); //end-1 !?
+    */
 };
 
 #endif

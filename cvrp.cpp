@@ -6,7 +6,10 @@
 using namespace std;
 
 CVRP::CVRP(string name, float **dist, float *dems, int dimension, int capacity, int depot) : 
-    VRP(name, dist, dems, dimension), C(capacity), dep(depot){}
+    VRP(name, dist, dems, dimension), C(capacity), dep(depot){
+        this->dist = dist;
+        this->dems = dems;
+    }
 
 void CVRP::print(){
     VRP::print();
@@ -14,7 +17,7 @@ void CVRP::print(){
     cout << "Depot: " << dep << endl;
 }
 
-void CVRP::getPetal(float **pos, int n, int dep, int cap, float *dems){
+list<list<int> *> * CVRP::getPetal(float **pos, int n, int dep, int cap, float *dems){
     int i,j;
     float *angles = new float[n]; //{w/e, angles ...}
     int *index = new int[n-1];    //{1,2,3,4,...,n-1} (0 out)
@@ -53,7 +56,9 @@ void CVRP::getPetal(float **pos, int n, int dep, int cap, float *dems){
     else{
         delete route;
     }
+    return routes;
     //lets clear
+    /*
     i=1;
     for(auto it = routes->begin(); it != routes->end(); ++it){
         route = *it;
@@ -66,4 +71,5 @@ void CVRP::getPetal(float **pos, int n, int dep, int cap, float *dems){
     }
     delete routes;
     //return routes
+    */
 }

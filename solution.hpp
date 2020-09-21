@@ -2,22 +2,33 @@
 #define cvrpsol_hpp
 
 #include "vehicle.hpp"
-#include <list> 
+#include "cvrp.hpp"
 #include <iostream>
 
 class Solution{
     //list<Vehicle *> * vehicles;
-    Vehicle **vehicles;
     int veh_total;
-    int veh_used;
-    float cost;
-    int nodes_count;
     //
     int veh_cap;
 public:
-    Solution(list<list<int> *>& routes, int cap);
-    removeVehicle(int index);
-    removeNode(int index);
+
+    //reference to instance
+    CVRP *instance;
+
+    Vehicle **vehicles;
+    float cost;
+    int veh_used;
+    int nodes_count;
+
+    std::list<int> nodes_bank;
+
+    Solution();
+    Solution(const Solution &sol);
+    Solution(CVRP *instance, std::list<std::list<int> *>& routes, int cap);
+    bool valid();
+    void removeVehicle(int index);
+    int removeNode(int index);
+    void addNode(int vehIndex, std::list<int>::iterator routePos, int node);
 };
 
 #endif
